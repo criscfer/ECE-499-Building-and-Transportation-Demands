@@ -33,7 +33,7 @@ import math
 
 # Get data file
 
-stock_file = "C:\\Users\\crist\\OneDrive\\Documentos\\UVic\\Courses\\UVIC-2023\\Spring-2023\\IESVic-Coop\\Building_Stock\\Stock_Formatted_Data_File.xlsx"
+stock_file = "./Documents and References\Stock_Formatted_Data_File.xlsx"
 stock_data = pd.DataFrame(pd.read_excel(stock_file, sheet_name="Input"))
 #print(stock_data.head())
 
