@@ -1,0 +1,81 @@
+@startuml Building_Stock_classes
+
+' Theme of choice
+!theme toy
+
+
+' Model dependencies description
+package Floor_space
+{
+    object Demolition_building_rate
+    object New_building_rate
+    object Retrofitted_building_rate
+}
+
+package Heat_Demand
+{
+   object EUI 
+}
+
+object Year
+object Population_growth
+
+' ----------------------------------------------------------
+
+' Vintages class
+class Vintage {
+    
+    ' Class attributes
+    - __vintage_history : Pandas DataFrame
+    - __vintage : list
+    - __new_floor_space : list
+    - __demo_floor_space : list
+    - __retrofit_floor_space : list
+    - __total_floor_space : list
+    - __start_year : integer (from _init_() method)
+    - __starting_stock : float (from _init_() method)
+    - __space_HD : list
+    - __water_HD : list
+    - __population : integer
+
+    =================================
+    ' Class methods
+    - _init(s_year, starting_building_stock=284.09)_ -->> None
+    + reset_vintage() -->> None
+    + add_to_vintage(vintage end) -->> None
+    + add_FS() -->> None
+    + change_vintage_period(new_y, new_end_y) -->> None
+    + check_vintage(type="total", current=True) -->> None
+    + get_avg_EUI() -->> None
+
+
+}
+
+' ----------------------------------------------------------
+
+' Relationships
+Population_growth *-- Year
+Demolition_building_rate *-- Year
+Retrofitted_building_rate *-- Year
+New_building_rate *-- Year
+EUI *-- Year
+
+Floor_space *-- Heat_Demand
+Floor_space *-- Population_growth
+' Demolition_building_rate *-- Floor_space
+' Retrofitted_building_rate *-- Floor_space 
+' New_building_rate *-- Floor_space
+Heat_Demand *-- Population_growth
+
+' ----------------------------------------------------------
+
+' Notes
+note right of Vintage::DataFrame
+    These are the class attributes (internal variables)
+end note
+
+note right of Vintage::None
+    These are the class methods (functions)
+end note
+
+@enduml
