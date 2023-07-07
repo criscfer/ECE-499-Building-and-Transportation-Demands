@@ -3,6 +3,7 @@
 ' Theme of choice
 !theme toy
 
+' ----------------------------------------------------------
 
 ' Model dependencies description
 package Floor_space
@@ -28,10 +29,25 @@ package Equations
 object Year
 object Population_growth
 
+' Relationships
+Population_growth *-- Year
+Demolition_building_rate *-- Year
+Retrofitted_building_rate *-- Year
+New_building_rate *-- Year
+EUI *-- Year
+
+Floor_space *-- Heat_Demand
+Floor_space *-- Population_growth
+Heat_Demand *-- Population_growth
+
 ' ----------------------------------------------------------
 
+' Splitting here to create a page for packages and one for the class itself
+newpage
+
 ' Vintages class
-class Vintage {
+class Vintage 
+{
     
     ' Class attributes
     - __vintage_history : Pandas DataFrame
@@ -46,7 +62,7 @@ class Vintage {
     - __water_HD : list
     - __population : integer
 
-    =================================
+    ================================
     ' Class methods
     - _init(s_year, starting_building_stock=284.09)_ -->> None
     + reset_vintage() -->> None
@@ -59,25 +75,6 @@ class Vintage {
 
 }
 
-' ----------------------------------------------------------
-
-' Relationships
-Population_growth *-- Year
-Demolition_building_rate *-- Year
-Retrofitted_building_rate *-- Year
-New_building_rate *-- Year
-EUI *-- Year
-
-Floor_space *-- Heat_Demand
-Floor_space *-- Population_growth
-' Demolition_building_rate *-- Floor_space
-' Retrofitted_building_rate *-- Floor_space 
-' New_building_rate *-- Floor_space
-Heat_Demand *-- Population_growth
-
-
-' ----------------------------------------------------------
-
 ' Notes
 note right of Vintage::DataFrame
     These are the class attributes (internal variables)
@@ -86,5 +83,7 @@ end note
 note right of Vintage::None
     These are the class methods (functions)
 end note
+
+' ----------------------------------------------------------
 
 @enduml
