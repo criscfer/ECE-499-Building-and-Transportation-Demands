@@ -14,7 +14,15 @@ package Floor_space
 
 package Heat_Demand
 {
-   object EUI 
+   object EUI
+}
+
+package Equations
+{
+    entity B_Stock_turnover_forecast(Eq21)
+    entity EUI_avg(Eq13)
+    entity Remaining_vintage_FS(Eq25)
+    entity Total_Heat_Demand(Eq30)
 }
 
 object Year
@@ -66,6 +74,7 @@ Floor_space *-- Population_growth
 ' Retrofitted_building_rate *-- Floor_space 
 ' New_building_rate *-- Floor_space
 Heat_Demand *-- Population_growth
+
 
 ' ----------------------------------------------------------
 
