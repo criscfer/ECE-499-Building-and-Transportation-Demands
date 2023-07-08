@@ -6,35 +6,43 @@
 ' ----------------------------------------------------------
 
 ' Model dependencies description
-package Floor_space
+
+package Vintage 
 {
-    object Demolition_building_rate
-    object New_building_rate
-    object Retrofitted_building_rate
+    package Floor_space
+    {
+        object Demolition_building_rate
+        object New_building_rate
+        object Retrofitted_building_rate
+        object Total_floor_space
+    }
+
+    package Heat_Demand
+    {
+    object EUI
+    }
+
+    package Equations
+    {
+        entity B_Stock_turnover_forecast(Eq21)
+        entity EUI_avg(Eq13)
+        entity Remaining_vintage_FS(Eq25)
+        entity Total_Heat_Demand(Eq30)
+    }
+
+    object Year
+    object Population_growth
 }
-
-package Heat_Demand
-{
-   object EUI
-}
-
-package Equations
-{
-    entity B_Stock_turnover_forecast(Eq21)
-    entity EUI_avg(Eq13)
-    entity Remaining_vintage_FS(Eq25)
-    entity Total_Heat_Demand(Eq30)
-}
-
-object Year
-object Population_growth
-
 ' Relationships
 Population_growth *-- Year
 Demolition_building_rate *-- Year
 Retrofitted_building_rate *-- Year
 New_building_rate *-- Year
 EUI *-- Year
+
+Total_floor_space *-- Demolition_building_rate
+Total_floor_space *-- Retrofitted_building_rate
+Total_floor_space *-- New_building_rate
 
 Floor_space *-- Heat_Demand
 Floor_space *-- Population_growth
@@ -59,7 +67,7 @@ class Vintage
     - __start_year : integer (from _init_() method)
     - __starting_stock : float (from _init_() method)
     - __space_HD : list
-    - __water_HD : list
+    ' - __water_HD : list
     - __population : integer
 
     ================================
@@ -67,10 +75,19 @@ class Vintage
     - _init(s_year, starting_building_stock=284.09)_ -->> None
     + reset_vintage() -->> None
     + add_to_vintage(vintage end) -->> None
-    + add_FS() -->> None
     + change_vintage_period(new_y, new_end_y) -->> None
     + check_vintage(type="total", current=True) -->> None
+    ' Eq 12: total FS
+    + add_FS() -->> None
+    ' Eq. 13: average EUI
     + get_avg_EUI() -->> None
+    ' Eq 21: BS forecast
+    + get_future_FS() -->> None
+    'Eq 25: remaining FS
+    + remain_FS() -->> None
+    ' Eq 30: total heat demand
+    + get_HD() -->> None
+
 
 
 }
